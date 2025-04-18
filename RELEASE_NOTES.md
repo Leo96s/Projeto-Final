@@ -1,3 +1,6 @@
+## v1.1.0 - 2025-04-18
+* feat: Ampliado os campos de user e corrigido validações
+* chore: update release notes and changelog for v1.0.0
 ## v1.0.0 - 2025-04-18
 * Create versioning.yml
 * BREAKING CHANGE: Criado um backend básico para o projeto
