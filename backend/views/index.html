@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal Backend</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(120deg, #502c2c, #db3434);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: white;
+        overflow: hidden;
+        cursor: none; /* Remover o cursor padrão */
+      }
+
+      .container {
+        text-align: center;
+        animation: fadeIn 1.5s ease-in-out;
+        padding: 2rem;
+        border-radius: 12px;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 1.2rem;
+      }
+
+      .highlight {
+        color: #000000;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .swagger-button {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #000000;
+        color: #fff;
+        text-decoration: none;
+        font-size: 1rem;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+
+      .swagger-button:hover {
+        background-color: #22e636;
+        transform: scale(1.05);
+      }
+
+      .footer {
+        position: absolute;
+        bottom: 20px;
+        font-size: 0.9rem;
+        color: #ddd;
+      }
+
+      .highlight-area {
+        position: absolute;
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.3); /* Cor clara para destacar */
+        border-radius: 50%;
+        width: 50px; /* Tamanho do círculo de destaque */
+        height: 50px; /* Tamanho do círculo de destaque */
+        transform: translate(-50%, -50%);
+        transition: all 0.1s ease-out; /* Animação suave */
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/api-docs" class="swagger-button">📘 Ver API Swagger</a>
+    <div class="container">
+      <h1>🎯 Bem-vindo ao <span class="highlight">Backend do Projeto</span></h1>
+      <p>O backend está a correr com sucesso! 🚀</p>
+      <p>Agora é só aproveitar o resto da viagem.</p>
+    </div>
+    <div class="footer">© 2025 - Backend do Projeto | Desenvolvido com ❤️</div>
+
+    <!-- Highlight do cursor -->
+    <div class="highlight-area" id="highlight"></div>
+
+    <script>
+      const highlight = document.getElementById("highlight");
+
+      document.addEventListener("mousemove", (event) => {
+        const x = event.clientX;
+        const y = event.clientY;
+
+        // Mover a área de destaque para onde o cursor está
+        highlight.style.left = `${x}px`;
+        highlight.style.top = `${y}px`;
+      });
+    </script>
+  </body>
+</html>
+

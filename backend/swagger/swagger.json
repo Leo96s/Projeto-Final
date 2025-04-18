@@ -1,0 +1,256 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Nome da Sua API",
+    "description": "Descrição detalhada sobre a API"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for user utilities"
+    }
+  ],
+  "paths": {
+    "/u/register-user": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create new User",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": { "description": "Email exists" },
+          "500": { "description": "Error in server" }
+        }
+      }
+    },
+    "/u/user/get-by-id/{userdId}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user by id",
+        "parameters": [
+          {
+            "name": "userdId",
+            "in": "path",
+            "required": true,
+            "description": "Id of user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": { "description": "You have to put the id" },
+          "404": { "description": "Id not found" }
+        },
+        "security": [
+          {
+            "utilizador_jwt_auth": []
+          }
+        ]
+      }
+    },
+    "/u/user/{userId}": {
+      "put": {
+        "summary": "Update user by Id",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "User id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user by Id",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Id of user",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": { "description": "User not found" },
+          "500": { "description": "Error in server" }
+        },
+        "security": [
+          {
+            "utilizador_jwt_auth": []
+          }
+        ]
+      }
+    },
+    "/u/user/get-by-email/{email}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user by email",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "description": "Email of user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": { "description": "You have to put the email" },
+          "404": { "description": "Email not found" }
+        },
+        "security": [
+          {
+            "utilizador_jwt_auth": []
+          }
+        ]
+      }
+    },
+    "/u/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all user in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "utilizador_jwt_auth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "utilizador_jwt_auth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-access-token"
+      }
+    },
+    "schemas": {
+      "User": {
+        "required": ["name", "email", "password"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of User"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of User"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password of User"
+          }
+        }
+      }
+    }
+  }
+}
+
+
