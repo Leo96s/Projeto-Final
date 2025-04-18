@@ -1,0 +1,130 @@
+name: Automated Versioning with Tags Based on Commit Messages
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+    paths-ignore:
+      - 'CHANGELOG.md'
+      - 'RELEASE_NOTES.md'
+
+jobs:
+  versioning:
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Fetch tags
+        run: git fetch --tags
+
+      - name: Get latest tag
+        id: tag
+        run: |
+          # vai buscar a última tag ou define padrão
+          TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "latest_tag=$TAG" >> $GITHUB_ENV
+
+      - name: Analyze commits for version bump
+        id: bump
+        run: |
+          TAG=${{ env.latest_tag }}
+          VERSION=${TAG#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+
+          # Só usa o range se a tag realmente existir no repositório
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            RANGE="$TAG..HEAD"
+          else
+            RANGE="HEAD"
+          fi
+
+          COMMITS=$(git log --pretty=%B $RANGE)
+
+          BUMP="patch"
+          if echo "$COMMITS" | grep -q "BREAKING CHANGE"; then
+            BUMP="major"
+          elif echo "$COMMITS" | grep -q "^feat:"; then
+            BUMP="minor"
+          elif echo "$COMMITS" | grep -q "^fix:"; then
+            BUMP="patch"
+          fi
+
+          if [ "$BUMP" = "major" ]; then
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+          elif [ "$BUMP" = "minor" ]; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          else
+            PATCH=$((PATCH + 1))
+          fi
+
+          NEW_VERSION="v$MAJOR.$MINOR.$PATCH"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_ENV
+          echo "Bumped to $NEW_VERSION"
+
+      - name: Create and push new tag
+        run: |
+          git tag ${{ env.new_version }}
+          git push origin ${{ env.new_version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git identity
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+
+      - name: Update RELEASE_NOTES.md and CHANGELOG.md
+        run: |
+          # Garante existência dos ficheiros
+          test -f RELEASE_NOTES.md || touch RELEASE_NOTES.md
+          test -f CHANGELOG.md    || touch CHANGELOG.md
+
+          # Determina tag anterior válida
+          PREV_TAG=$(git describe --tags --abbrev=0 --exclude="${{ env.new_version }}" 2>/dev/null || echo "v0.0.0")
+          # Usa a mesma lógica de RANGE para obter commits
+          if git rev-parse "$PREV_TAG" >/dev/null 2>&1; then
+            RANGE="$PREV_TAG..HEAD"
+          else
+            RANGE="HEAD"
+          fi
+
+          COMMITS=$(git log --pretty=format:"* %s" $RANGE)
+          if [ -z "$COMMITS" ]; then
+            echo "Sem novos commits — nada a atualizar."
+            exit 0
+          fi
+
+          # Prepara novos cabeçalhos
+          DATE=$(date +'%Y-%m-%d')
+          echo "## ${{ env.new_version }} - $DATE" > new_RELEASE_NOTES.md
+          echo "$COMMITS" >> new_RELEASE_NOTES.md
+          cat RELEASE_NOTES.md >> new_RELEASE_NOTES.md
+
+          echo "## ${{ env.new_version }} - $DATE" > new_CHANGELOG.md
+          echo "$COMMITS" >> new_CHANGELOG.md
+          cat CHANGELOG.md >> new_CHANGELOG.md
+
+          mv new_RELEASE_NOTES.md RELEASE_NOTES.md
+          mv new_CHANGELOG.md    CHANGELOG.md
+
+          git add RELEASE_NOTES.md CHANGELOG.md
+          if git diff --cached --quiet; then
+            echo "Nenhuma alteração nos notes/changelog."
+            exit 0
+          fi
+
+          git commit -m "chore: update release notes and changelog for ${{ env.new_version }}"
+          git push origin main
