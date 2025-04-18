@@ -232,7 +232,7 @@
     },
     "schemas": {
       "User": {
-        "required": ["name", "email", "password"],
+        "required": ["name", "email", "password", "phone", "birthDate", "isActive", "createdAt", "updatedAt"],
         "type": "object",
         "properties": {
           "name": {
@@ -246,6 +246,29 @@
           "password": {
             "type": "string",
             "description": "Password of User"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone of User"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Birth Date of User"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Is User Active"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date of Creation of User"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date of Update of User"
           }
         }
       }

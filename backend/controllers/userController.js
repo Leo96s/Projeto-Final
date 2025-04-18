@@ -1,13 +1,22 @@
 const User = require("../models/User.js");
 
+const bcrypt = require('bcrypt');
+const SALT_ROUNDS = 10;
+
 // Criar utilizador
 const createUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, phone, birthDate } = req.body;
   
     // Validação básica do email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.pt$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: "Email inválido. Tem de conter '@' e terminar em '.pt'" });
+      return res.status(400).json({ error: "Email inválido. Tem de conter '@' e terminar em por exemplo '.pt'" });
+    }
+  
+    // Validação do número de telefone (9 dígitos, apenas números)
+    const phoneRegex = /^\d{9}$/;
+    if (!phoneRegex.test(phone)) {
+      return res.status(400).json({ error: "Número de telefone inválido. Deve conter exatamente 9 dígitos e apenas números." });
     }
   
     try {
@@ -17,13 +26,24 @@ const createUser = async (req, res) => {
         return res.status(400).json({ error: "Já existe um utilizador com este email" });
       }
   
+      // Encripta a palavra-passe
+      const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+  
       // Cria o utilizador
-      const user = await User.create({ name, email, password });
+      const user = await User.create({
+        name,
+        email,
+        password: hashedPassword,
+        phone,
+        birthDate
+      });
+  
       res.status(201).json(user);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
   };
+  
 
 // Obter utilizador por ID
 const getUserById = async (req, res) => {
@@ -68,12 +88,16 @@ const updateUser = async (req, res) => {
     const userId = req.params.userId;
     const userData = req.body;
   
+    // Campos protegidos que não devem ser atualizados
+    const protectedFields = ["isActive", "createdAt", "updatedAt"];
+  
     const fieldsToUpdate = {};
     for (const key in userData) {
       if (
         userData[key] !== undefined &&
         userData[key] !== null &&
-        userData[key] !== ""
+        userData[key] !== "" &&
+        !protectedFields.includes(key)
       ) {
         fieldsToUpdate[key] = userData[key];
       }
@@ -84,14 +108,13 @@ const updateUser = async (req, res) => {
     }
   
     try {
-      // Se o email for um dos campos a atualizar
+      // Validação e verificação de email
       if (fieldsToUpdate.email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.pt$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(fieldsToUpdate.email)) {
-          return res.status(400).json({ error: "Email inválido. Tem de conter '@' e terminar em '.pt'" });
+          return res.status(400).json({ error: "Email inválido. Tem de conter '@' e terminar em por exemplo '.pt'" });
         }
   
-        // Verifica se já existe um utilizador com o mesmo email (exceto o próprio)
         const existingUser = await User.findOne({
           where: { email: fieldsToUpdate.email }
         });
@@ -101,6 +124,20 @@ const updateUser = async (req, res) => {
         }
       }
   
+      // Validação do número de telefone (9 dígitos, apenas números)
+      if (fieldsToUpdate.phone) {
+        const phoneRegex = /^\d{9}$/;
+        if (!phoneRegex.test(fieldsToUpdate.phone)) {
+          return res.status(400).json({ error: "Número de telefone inválido. Deve conter exatamente 9 dígitos e apenas números." });
+        }
+      }
+  
+      // Encriptar palavra-passe se for atualizada
+      if (fieldsToUpdate.password) {
+        fieldsToUpdate.password = await bcrypt.hash(fieldsToUpdate.password, SALT_ROUNDS);
+      }
+  
+      // Atualizar utilizador
       const [updated] = await User.update(fieldsToUpdate, {
         where: { id: userId },
         returning: true,
@@ -116,6 +153,7 @@ const updateUser = async (req, res) => {
       res.status(500).json({ error: err.message });
     }
   };
+  
 
 // Eliminar utilizador
 const deleteUser = async (req, res) => {
