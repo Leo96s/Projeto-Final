@@ -1,3 +1,6 @@
+## v1.2.0 - 2025-04-22
+* feat: utilização de ferramentas para melhorar o projeto, usado joi, helmet, jest e snyk,
+* chore: update release notes and changelog for v1.1.0
 ## v1.1.0 - 2025-04-18
 * feat: Ampliado os campos de user e corrigido validações
 * chore: update release notes and changelog for v1.0.0
