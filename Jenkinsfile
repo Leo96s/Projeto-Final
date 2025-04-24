@@ -9,8 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Baixar o código do repositório
-                checkout scm
+                git url: 'https://github.com/Leo96s/Projeto-Final', branch: 'main'
             }
         }
 
