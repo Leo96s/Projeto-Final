@@ -26,8 +26,11 @@ pipeline {
             steps {
                 // Executar testes, caso você tenha algum teste configurado
                 script {
-                    sh 'npm test'
-                }
+            // Mudar para o diretório correto
+            dir('backend') {
+                // Instalar as dependências
+                sh 'npm install'
+            }
             }
         }
 
