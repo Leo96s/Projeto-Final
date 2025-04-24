@@ -1,3 +1,6 @@
+## v1.2.1 - 2025-04-24
+* fix: Criado testes e atualizado alguns dados para tudo estar completamente funcional
+* chore: update release notes and changelog for v1.2.0
 ## v1.2.0 - 2025-04-22
 * feat: utilização de ferramentas para melhorar o projeto, usado joi, helmet, jest e snyk,
 * chore: update release notes and changelog for v1.1.0
