@@ -1,3 +1,6 @@
+## v1.2.5 - 2025-04-24
+* fix: tentando ainda corrigir a pipeline
+* chore: update release notes and changelog for v1.2.4
 ## v1.2.4 - 2025-04-24
 * fix: fix bug na pipeline
 * chore: update release notes and changelog for v1.2.3
