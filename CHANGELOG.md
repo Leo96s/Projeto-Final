@@ -1,3 +1,6 @@
+## v1.2.2 - 2025-04-24
+* fix: criado uma pipeline inicial
+* chore: update release notes and changelog for v1.2.1
 ## v1.2.1 - 2025-04-24
 * fix: Criado testes e atualizado alguns dados para tudo estar completamente funcional
 * chore: update release notes and changelog for v1.2.0
