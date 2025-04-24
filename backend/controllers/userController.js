@@ -1,4 +1,4 @@
-const User = require("../models/User.js");
+const { User } = require("../models");
 
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 10;
@@ -67,14 +67,16 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-// Atualizar utilizador
 const updateUser = async (req, res) => {
   const userId = req.params.userId;
   const userData = req.body;
 
-  const protectedFields = ["isActive", "createdAt", "updatedAt"];
+  // Campos protegidos que não devem ser alterados
+  const protectedFields = ["createdAt", "updatedAt", "isActive"];
 
   const fieldsToUpdate = {};
+
+  // Validar e preparar os campos para atualização
   for (const key in userData) {
     if (
       userData[key] !== undefined &&
@@ -86,11 +88,20 @@ const updateUser = async (req, res) => {
     }
   }
 
+  // Se nenhum campo válido para atualização for fornecido
   if (Object.keys(fieldsToUpdate).length === 0) {
     return res.status(400).json({ error: "Nenhum campo válido para atualizar" });
   }
 
   try {
+    // Verificar se o utilizador com o ID fornecido existe
+    const userExists = await User.findOne({ where: { id: userId } });
+
+    if (!userExists) {
+      return res.status(404).json({ error: "Utilizador não encontrado" });
+    }
+
+    // Verificar se o email já está em uso
     if (fieldsToUpdate.email) {
       const existingUser = await User.findOne({
         where: { email: fieldsToUpdate.email }
@@ -101,26 +112,26 @@ const updateUser = async (req, res) => {
       }
     }
 
+    // Se a senha foi fornecida, hash da senha
     if (fieldsToUpdate.password) {
       fieldsToUpdate.password = await bcrypt.hash(fieldsToUpdate.password, SALT_ROUNDS);
     }
 
-    const [updated] = await User.update(fieldsToUpdate, {
+    // Realizar a atualização
+    await User.update(fieldsToUpdate, {
       where: { id: userId },
-      returning: true,
     });
+    
+    const updatedUser = await User.findOne({ where: { id: userId } });
 
-    if (updated) {
-      const updatedUser = await User.findByPk(userId);
-      res.json(updatedUser);
-    } else {
-      res.status(404).json({ error: "Utilizador não encontrado" });
-    }
+
+    // Retorna a resposta com os dados atualizados
+    res.status(200).json(updatedUser);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-  
+
 
 // Eliminar utilizador
 const deleteUser = async (req, res) => {
@@ -142,6 +153,8 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
 
 module.exports = {
   createUser,
