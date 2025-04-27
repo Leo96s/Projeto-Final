@@ -1,3 +1,6 @@
+## v1.2.10 - 2025-04-27
+* fix: afinal ainda tinha erro na pipeline :(
+* chore: update release notes and changelog for v1.2.9
 ## v1.2.9 - 2025-04-27
 * fix: corrigo erros na pipeline, agora de vez :)
 * chore: update release notes and changelog for v1.2.8
