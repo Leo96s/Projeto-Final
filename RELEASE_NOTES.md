@@ -1,3 +1,6 @@
+## v1.3.6 - 2025-04-27
+* fix: corrigindo o dockerfile
+* chore: update release notes and changelog for v1.3.5
 ## v1.3.5 - 2025-04-27
 * fix: corrigindo o server.js
 * chore: update release notes and changelog for v1.3.4
