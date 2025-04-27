@@ -22,7 +22,6 @@ pipeline {
             }
             }
             }
-        }
 
         stage('Test') {
             steps {
@@ -34,6 +33,7 @@ pipeline {
                 sh 'npm install'
             }
             }
+        }
         }
 
         stage('Deploy to Vercel') {

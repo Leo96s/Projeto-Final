@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.492.3-jdk17
+FROM jenkins/jenkins:lts-jdk17
 
 USER root
 
@@ -15,7 +15,7 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
 RUN apt-get update && apt-get install -y docker-ce-cli
 
 # Instalar Node.js (necessário para rodar a CLI do Vercel)
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
 # Instalar a CLI do Vercel globalmente
