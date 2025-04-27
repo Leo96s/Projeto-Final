@@ -8,7 +8,11 @@ theme-manager:latest
 pipeline-graph-view:latest
 timestamper:latest
 email-ext:latest
-buildstep:latest
-global-timeout:latest
 resource-disposer:latest
-enriched-summary:latest
+credentials:latest
+github:latest
+github-branch-source:latest
+mailer:latest
+bitbucket:latest
+ssh-credentials:latest
+scm-api:latest
