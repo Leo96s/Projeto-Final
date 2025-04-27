@@ -5,3 +5,4 @@ blueocean:latest
 git:latest
 credentials-binding:latest
 theme-manager:latest
+pipeline-graph-view:latest
