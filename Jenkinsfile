@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     // Exemplo de deploy no Vercel usando a CLI do Vercel
-                    sh 'vercel --prod --yes --token $VERCEL_TOKEN'
+                    sh 'vercel --prod --yes --token $VERCEL_TOKEN --name projeto-final'
 
                 }
             }
