@@ -1,3 +1,6 @@
+## v1.3.1 - 2025-04-27
+* fix: corrigido dados no server
+* chore: update release notes and changelog for v1.3.0
 ## v1.3.0 - 2025-04-27
 * feat: pipeline finalizada e criado root para rodar a pipeline a cada commit
 * chore: update release notes and changelog for v1.2.11
