@@ -1,3 +1,6 @@
+## v1.3.15 - 2025-04-27
+* fix: adicionando ainda mais plugins
+* chore: update release notes and changelog for v1.3.14
 ## v1.3.14 - 2025-04-27
 * fix: adicionando mais plugins em falta
 * chore: update release notes and changelog for v1.3.13
