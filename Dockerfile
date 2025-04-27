@@ -18,9 +18,6 @@ RUN apt-get update && apt-get install -y docker-ce-cli
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
-# Instalar a CLI do Vercel globalmente
-RUN npm install -g vercel
-
 USER jenkins
 
 # Instalar plugins do Jenkins necessários

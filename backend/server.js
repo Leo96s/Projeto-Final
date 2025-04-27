@@ -3,7 +3,9 @@ const { Sequelize } = require("sequelize");
 
 const PORT = process.env.PORT || 5000;
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const URL = process.env.DATABASE_URL || ""
+
+const sequelize = new Sequelize(URL, {
   dialect: "postgres",
   logging: false,
 });
