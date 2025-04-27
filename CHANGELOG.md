@@ -1,3 +1,7 @@
+## v1.3.7 - 2025-04-27
+* Merge branch 'main' of https://github.com/Leo96s/Projeto-Final
+* fix: corrigindo o dockerfile
+* chore: update release notes and changelog for v1.3.6
 ## v1.3.6 - 2025-04-27
 * fix: corrigindo o dockerfile
 * chore: update release notes and changelog for v1.3.5
