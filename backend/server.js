@@ -9,8 +9,9 @@ const sequelize = new Sequelize(URL, {
   dialect: "postgres",
   dialectOptions: {
     ssl: {
-      require: true,
-      rejectUnauthorized: false, // Isto é importante para Aiven/Heroku bancos
+      require: true,          // força a utilização de SSL
+      rejectUnauthorized: false, // aceita certificados autoassinados
+      ca: [fs.readFileSync("/path/to/cert.pem").toString()], // opcional, caso precisas de um certificado específico
     },
   },
   logging: false,
