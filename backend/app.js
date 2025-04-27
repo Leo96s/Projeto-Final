@@ -17,6 +17,24 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/views/index.html"));
 });
 
+app.post('/', (req, res) => {
+  const githubEvent = req.headers['x-github-event'];
+
+  if (githubEvent === 'push') {
+    console.log('Recebido push do GitHub, executando pipeline...');
+    exec('az pipelines run --name NomeDaSuaPipeline', (err, stdout, stderr) => {
+      if (err) {
+        console.error(`Erro ao executar pipeline: ${stderr}`);
+        return res.status(500).send('Erro na execução da pipeline');
+      }
+      console.log(`Pipeline iniciada com sucesso: ${stdout}`);
+      res.status(200).send('Pipeline iniciada!');
+    });
+  } else {
+    res.status(200).send('Evento ignorado');
+  }
+});
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/u", userRoutes);
 
