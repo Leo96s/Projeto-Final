@@ -1,3 +1,6 @@
+## v1.3.13 - 2025-04-27
+* fix: adicionando plugins em falta
+* chore: update release notes and changelog for v1.3.12
 ## v1.3.12 - 2025-04-27
 * fix: corrigindo o ficheiro jenkins e adicionando mais um plugin
 * chore: update release notes and changelog for v1.3.11
