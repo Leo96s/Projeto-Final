@@ -16,3 +16,7 @@ mailer:latest
 bitbucket:latest
 ssh-credentials:latest
 scm-api:latest
+buildStepOperation=default
+globalTimeOutConfiguration=30m
+injectionConfig=enabled
+enrichedSummaryConfig=enabled
