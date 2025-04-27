@@ -4,3 +4,4 @@ docker-plugin:latest
 blueocean:latest
 git:latest
 credentials-binding:latest
+theme-manager:latest
