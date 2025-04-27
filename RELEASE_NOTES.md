@@ -1,3 +1,6 @@
+## v1.3.2 - 2025-04-27
+* fix: corrigido no server erros
+* chore: update release notes and changelog for v1.3.1
 ## v1.3.1 - 2025-04-27
 * fix: corrigido dados no server
 * chore: update release notes and changelog for v1.3.0
