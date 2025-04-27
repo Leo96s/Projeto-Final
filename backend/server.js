@@ -13,6 +13,7 @@ const sequelize = new Sequelize(URL, {
       rejectUnauthorized: false, // aceita certificados autoassinados
     },
   },
+  ssl: true,
   logging: false,
 });
 
