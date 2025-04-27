@@ -1,3 +1,6 @@
+## v1.3.4 - 2025-04-27
+* fix: corrigindo o dockerfile
+* chore: update release notes and changelog for v1.3.3
 ## v1.3.3 - 2025-04-27
 * Merge branch 'main' of https://github.com/Leo96s/Projeto-Final
 * fix: corrgido cenas do server.js
