@@ -1,3 +1,6 @@
+## v1.3.11 - 2025-04-27
+* fix: corrigindo config do jenkins.yaml
+* chore: update release notes and changelog for v1.3.10
 ## v1.3.10 - 2025-04-27
 * fix: corrigindo ainda o dockerfile
 * chore: update release notes and changelog for v1.3.9
