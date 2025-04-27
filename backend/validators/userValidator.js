@@ -3,7 +3,7 @@ const Joi = require("joi");
 const createUserSchema = Joi.object({
   name: Joi.string().min(2).required(),
   email: Joi.string().email({ tlds: { allow: false } }).required(),
-  password: Joi.string().min(6).required(),
+  password: Joi.string().min(6).required().max(30),
   phone: Joi.string().pattern(/^\d{9}$/).required(),
   birthDate: Joi.date().required(),
   isActive: Joi.boolean(),       // Se a conta está ativa
@@ -14,7 +14,7 @@ const createUserSchema = Joi.object({
 const updateUserSchema = Joi.object({
   name: Joi.string().min(2),
   email: Joi.string().email({ tlds: { allow: false } }),
-  password: Joi.string().min(6),
+  password: Joi.string().min(6).max(30),
   phone: Joi.string().pattern(/^\d{9}$/),
   birthDate: Joi.date(),
   isActive: Joi.string(),       // Se a conta está ativa
