@@ -7,6 +7,12 @@ const URL = process.env.DATABASE_URL || ""
 
 const sequelize = new Sequelize(URL, {
   dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Isto é importante para Aiven/Heroku bancos
+    },
+  },
   logging: false,
 });
 
