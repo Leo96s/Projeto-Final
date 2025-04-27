@@ -31,8 +31,8 @@ USER jenkins
 # Defina o diretório de trabalho do Jenkins
 WORKDIR /var/jenkins_home
 
-# Exponha a porta para acessar o Jenkins via navegador
-EXPOSE 8080
-
 # Instalar plugins do Jenkins necessários
 RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"
+
+# Evitar o setup inicial do Jenkins (passo de configuração inicial)
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
