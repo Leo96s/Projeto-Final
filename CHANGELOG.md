@@ -1,3 +1,6 @@
+## v1.2.11 - 2025-04-27
+* fix:corrigido um erro no userValidator
+* chore: update release notes and changelog for v1.2.10
 ## v1.2.10 - 2025-04-27
 * fix: afinal ainda tinha erro na pipeline :(
 * chore: update release notes and changelog for v1.2.9
