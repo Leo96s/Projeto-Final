@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         // Variáveis de ambiente, por exemplo, chave de autenticação do Vercel
-        VERCEL_TOKEN = credentials('vercel-token') // Supondo que você tenha configurado a chave de autenticação no Jenkins
     }
 
     stages {
@@ -39,9 +38,8 @@ pipeline {
         stage('Deploy to Vercel') {
             steps {
                 script {
-                    // Exemplo de deploy no Vercel usando a CLI do Vercel
-                    sh 'vercel --prod --yes --token $VERCEL_TOKEN --name projeto-final'
-
+                git url: 'https://github.com/Leo96s/Projeto-Final', branch: 'main'
+                echo 'Deploy realizado automaticamente pelo Render!'
                 }
             }
         }

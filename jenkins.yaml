@@ -6,6 +6,10 @@ credentials:
           id: "vercel-token"
           scope: GLOBAL
           secret: "{AQAAABAAAAAgBI4GgZsjaTg7HUqpy3EQVHCsyLjgCpI1wEmQKq7/+5SG/sxceKRsh+LpAFmm5peP}"
+      - string:    
+          id: "RENDER_API_KEY"
+          scope: GLOBAL
+          secret: "{rnd_RTDvQjj6hotyWRu21EYpFYJ3lEn6}"
 jenkins:
   authorizationStrategy:
     loggedInUsersCanDoAnything:
