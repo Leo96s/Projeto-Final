@@ -11,7 +11,6 @@ const sequelize = new Sequelize(URL, {
     ssl: {
       require: true,          // força a utilização de SSL
       rejectUnauthorized: false, // aceita certificados autoassinados
-      ca: [fs.readFileSync("/path/to/cert.pem").toString()], // opcional, caso precisas de um certificado específico
     },
   },
   logging: false,
