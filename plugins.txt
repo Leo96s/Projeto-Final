@@ -6,3 +6,9 @@ git:latest
 credentials-binding:latest
 theme-manager:latest
 pipeline-graph-view:latest
+timestamper:latest
+email-ext:latest
+buildstep:latest
+global-timeout:latest
+resource-disposer:latest
+enriched-summary:latest
