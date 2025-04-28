@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        // Variáveis de ambiente, por exemplo, chave de autenticação do Vercel
-    }
-
     stages {
         stage('Checkout') {
             steps {
