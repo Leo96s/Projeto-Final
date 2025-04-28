@@ -55,6 +55,7 @@ jenkins:
       users:
       - id: "leonardo"
         name: "Leonardo Henrique Barbosa da Silva"
+        password: "${JENKINS_USER_PASSWORD}"
         properties:
         - "consoleUrlProvider"
         - "myView"
