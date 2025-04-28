@@ -1,3 +1,6 @@
+## v1.3.20 - 2025-04-28
+* fix: corrigido um erro no jenkins file
+* chore: update release notes and changelog for v1.3.19
 ## v1.3.19 - 2025-04-28
 * Merge branch 'main' of https://github.com/Leo96s/Projeto-Final
 * fix: corrgido uma setting do jenkins
